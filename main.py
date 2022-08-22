@@ -1,4 +1,5 @@
 import csv
+import json
 
 import requests
 from bs4 import BeautifulSoup
@@ -54,6 +55,14 @@ def save(product_list, path):  # ФУНКЦИЯ ЗАПИСИ
             writer.writerow((team['name'], team['ID'], team['href']))
         csvfile.close()
 
+# сохранение в json
+def save_json(product_list, path):
+    with open(path,'w') as file:
+        json.dump(product_list,file,indent=4, ensure_ascii=False)
+        file.close()
+
+
+
 
 # из файла в словарь
 def file_to_dict(path):
@@ -81,17 +90,40 @@ def get_ids(path):
     csvfile.close()
     return ids
 
+# while open('alt_product_list.json',  'r') as file:
+#         alt_product_list = json.load(file)
+
+
 
 if __name__ == '__main__':
     for i in range(1,21):
         list_url = url + str(i)
+        print('SOUP')
         soup = get_data(list_url)
+        print('parse')
         parse(soup)
 
+    # with open('alt_product_list.json') as file:
+    #     alt_product_list = json.load(file)
+    #     file.close()
+    #
+    #
+    # for i in products_list:
+    #     for j in alt_product_list:
+    #         if i['ID'] != j['ID']:
+    #             send_message(chat_id, i['href'])
+
+
+
+
+
     ids = get_ids('alt_product_list.csv')
+
     for i in products_list:
         if i['ID'] not in ids:
             send_message(chat_id, i['href'])
+    print('Speichern')
     save(products_list, 'alt_product_list.csv')
 
+    # save_json(products_list,'alt_product_list.json')
 
