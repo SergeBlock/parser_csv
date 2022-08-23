@@ -5,6 +5,10 @@ import json
 import requests
 from bs4 import BeautifulSoup
 
+from config import products_list
+
+products_list = products_list
+
 
 def get_data(url):
     r = requests.get(url)
