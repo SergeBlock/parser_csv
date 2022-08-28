@@ -10,8 +10,8 @@ from config import products_list
 products_list = products_list
 
 
-def get_data(url):
-    r = requests.get(url)
+def get_data(url, headers):
+    r = requests.get(url, headers=headers)
     soup = BeautifulSoup(r.text, 'lxml')
     with open('index.html', 'w') as file:
         file.write(r.text)
@@ -20,7 +20,7 @@ def get_data(url):
 
 
 # получение данных из супа
-def parse(soup):
+def parse_scout(soup):
     # productslist = []
     global products_list
     result = soup.find_all('article', {
