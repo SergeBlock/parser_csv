@@ -5,13 +5,11 @@ import json
 import requests
 from bs4 import BeautifulSoup
 
-from config import products_list
-
-products_list = products_list
+products_list = []
 
 
-def get_data(url, headers):
-    r = requests.get(url, headers=headers)
+def get_data(url):
+    r = requests.get(url)
     soup = BeautifulSoup(r.text, 'lxml')
     with open('index.html', 'w') as file:
         file.write(r.text)
@@ -54,13 +52,12 @@ def save(product_list, path):  # ФУНКЦИЯ ЗАПИСИ
             writer.writerow((team['name'], team['ID'], team['href']))
         csvfile.close()
 
+
 # сохранение в json
 def save_json(product_list, path):
-    with open(path,'w') as file:
-        json.dump(product_list,file,indent=4, ensure_ascii=False)
+    with open(path, 'w') as file:
+        json.dump(product_list, file, indent=4, ensure_ascii=False)
         file.close()
-
-
 
 
 # из файла в словарь
